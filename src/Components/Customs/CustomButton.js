@@ -1,8 +1,10 @@
 import React from 'react'
 
-const CustomButton = () => {
+const CustomButton = ({buttonText, handleClick}) => {
   return (
-    <div>CustomButton</div>
+    <button className='w-full bg-[#00ADEE] h-12 rounded-md text-white' onClick={handleClick}>
+          {buttonText}
+    </button>
   )
 }
 

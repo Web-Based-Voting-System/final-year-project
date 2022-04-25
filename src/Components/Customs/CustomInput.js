@@ -1,9 +1,13 @@
-import React from 'react'
+import React from "react";
 
-const CustomInput = () => {
-  return (
-    <div>CustomInput</div>
-  )
-}
+const CustomInput = ({placeholder}) => {
+	return (
+		<input
+			type="text"
+			className="w-full my-1 h-12 border border-gray-300 outline-gray-400 pl-3 rounded-md"
+                  placeholder={placeholder}
+		/>
+	);
+};
 
-export default CustomInput
+export default CustomInput;
