@@ -11,14 +11,15 @@ const CategoriesPage = () => {
 
 	const { id } = useParams();
 
-
 	useEffect(() => {
 		let mounted = true;
 
 		if (mounted) {
-			axios.get(`http://localhost:8081/category/${id}`).then(({ data }) => {
-				setcategory(data);
-			});
+			axios
+				.get(`http://localhost:8081/category/${id}`)
+				.then(({ data }) => {
+					setcategory(data);
+				});
 		}
 
 		return () => {};
@@ -41,12 +42,19 @@ const CategoriesPage = () => {
 					{category &&
 						category.map((item) => (
 							<div key={item.id}>
-								<Candidate 
-								candidateTitle={item.category_name}  
-								link={`../categories/candidates/${item.id}`}
-								buttonText={'View category'} />
+								<Candidate
+									candidateTitle={item.category_name}
+									link={`../categories/candidates/${item.id}`}
+									buttonText={"View category"}
+								/>
 							</div>
 						))}
+
+					{category.length < 1 ? (
+						<div className="text-center py-24">
+							<h1 className="text-6xl">No votes created</h1>
+						</div>
+					) : null}
 				</div>
 			</div>
 		</div>
