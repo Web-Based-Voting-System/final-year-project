@@ -36,7 +36,7 @@ const ElectionCategory = () => {
 		}
 
 		axios
-			.post("http://localhost:8081/create-category", data)
+			.post("http://localhost:8081/admin/create-category", data)
 			.then(({ data }) => {
 				setmessage(data);
 				setdata("");
@@ -49,7 +49,7 @@ const ElectionCategory = () => {
 
 		if (mounted) {
 			axios
-				.get(`http://localhost:8081/category/${id}`)
+				.get(`http://localhost:8081/admin/category/${id}`)
 				.then(({ data }) => {
 					setcategory(data);
 				});

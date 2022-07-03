@@ -27,7 +27,7 @@ const LoginPage = () => {
 			setmessage("All fields are required");
 		} else {
 			axios
-				.post("http://localhost:8081/loginUser", data)
+				.post("http://localhost:8081/users/loginUser", data)
 				.then(({ data }) => {
 					if (data.auth === 0) {
 						setmessage(data.message);

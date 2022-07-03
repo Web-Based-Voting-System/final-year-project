@@ -1,5 +1,5 @@
 import React from "react";
-import {FaCross} from 'react-icons/fa'
+import {FaWindowClose} from 'react-icons/fa'
 
 const Modal = ({closeCreateVote, children}) => {
 	return (
@@ -8,7 +8,7 @@ const Modal = ({closeCreateVote, children}) => {
 				className="absolute right-10 top-10 text-6xl cursor-pointer"
 				onClick={closeCreateVote}
 			>
-				<FaCross size={80} />
+					<FaWindowClose size={40} />
 			</div>
 			<div className="pt-40">
 				{children}

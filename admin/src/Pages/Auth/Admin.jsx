@@ -5,6 +5,7 @@ import axios from "axios";
 import CustomButton from "../../Components/Customs/CustomButton";
 import CustomInput from "../../Components/Customs/CustomInput";
 import { Link } from "react-router-dom";
+import Modal from "../../Components/Auth/Modal";
 
 const Admin = () => {
 	const [category, setcategory] = useState([]);
@@ -30,7 +31,7 @@ const Admin = () => {
 			setmessage("Can not be empty");
 		} else {
 			axios
-				.post("http://localhost:8081/create-vote", data)
+				.post("http://localhost:8081/admin/create-vote", data)
 				.then(({ data }) => {
 					setmessage(data);
 				})
@@ -42,7 +43,7 @@ const Admin = () => {
 		let mounted = true;
 
 		if (mounted) {
-			axios.get(`http://localhost:8081/electiontype`).then(({ data }) => {
+			axios.get(`http://localhost:8081/admin/electiontype`).then(({ data }) => {
 				setcategory(data);
 			});
 		}
@@ -65,50 +66,44 @@ const Admin = () => {
 					visibilities ? "" : "hidden"
 				} `}
 			>
-				<div
-					className="absolute right-10 top-10 text-6xl cursor-pointer"
-					onClick={closeCreateVote}
-				>
-					x
-				</div>
-				<div className="pt-40">
-					<form className=" bg-white w-2/6 mx-auto p-8 z-50">
-						<h2 className="text-3xl pb-5">Create your election</h2>
-						{message && (
-							<p className="text-lg text-center bg-red-600 p-3 text-white">
-								{message}
-							</p>
-						)}
+				<Modal closeCreateVote={closeCreateVote}>
+					<div className="pt-5">
+						<form className=" bg-white w-2/6 mx-auto p-8 z-50">
+							<h2 className="text-3xl pb-5">Create your election</h2>
+							{message && (
+								<p className="text-lg text-center bg-red-600 p-3 text-white">
+									{message}
+								</p>
+							)}
 
-						<div className="my-4">
-							<label className="text-lg my-8">
-								Election name
-							</label>
-							<CustomInput
-								nameValue={"election_name"}
-								value={data.election_name}
-								handleChange={handleChange}
-								type="text"
-							/>
-						</div>
-						<div>
-							<label>Election description</label>
-							<textarea
-								value={data.election_description}
-								name="election_description"
-								onChange={handleChange}
-								className="w-full my-1 border border-gray-300 outline-gray-400 p-3 rounded-md h-40"
-							></textarea>
-						</div>
-						<div className="my-4">
-							<CustomButton
-								buttonText={"Create vote"}
-								handleClick={createElection}
-								backgroundColor={"orange"}
-							/>
-						</div>
-					</form>
-				</div>
+							<div className="my-4">
+								<label className="text-lg my-8">Election name</label>
+								<CustomInput
+									nameValue={"election_name"}
+									value={data.election_name}
+									handleChange={handleChange}
+									type="text"
+								/>
+							</div>
+							<div>
+								<label>Election description</label>
+								<textarea
+									value={data.election_description}
+									name="election_description"
+									onChange={handleChange}
+									className="w-full my-1 border border-gray-300 outline-gray-400 p-3 rounded-md h-40"
+								></textarea>
+							</div>
+							<div className="my-4">
+								<CustomButton
+									buttonText={"Create vote"}
+									handleClick={createElection}
+									backgroundColor={"orange"}
+								/>
+							</div>
+						</form>
+					</div>
+				</Modal>
 			</div>
 			<div className="">
 				<Navigation />

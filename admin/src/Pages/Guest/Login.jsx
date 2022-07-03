@@ -27,7 +27,7 @@ const Login = () => {
 		}
 
 		axios
-			.post("http://localhost:8081/loginAdmin", data)
+			.post("http://localhost:8081/admin/loginAdmin", data)
 			.then(({ data }) => {
 				if (data.auth === 0) {
 					setmessage(data.message);

@@ -16,7 +16,7 @@ const CategoriesPage = () => {
 
 		if (mounted) {
 			axios
-				.get(`http://localhost:8081/category/${id}`)
+				.get(`http://localhost:8081/users/category/${id}`)
 				.then(({ data }) => {
 					setcategory(data);
 				});

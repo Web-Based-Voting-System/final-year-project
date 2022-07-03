@@ -16,13 +16,13 @@ const VotingResultsPage = () => {
 
 		if (mounted) {
 			axios
-				.get(`http://localhost:8081/candidate/${id}`)
+				.get(`http://localhost:8081/users/candidate/${id}`)
 				.then(({ data }) => {
 					setcandidate(data);
 				});
 
 			axios
-				.get(`http://localhost:8081/votesCounts/${id}`)
+				.get(`http://localhost:8081/users/votesCounts/${id}`)
 				.then(({ data }) => {
 					setnoOfVote(data);
 				});

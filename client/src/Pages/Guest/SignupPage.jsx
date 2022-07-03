@@ -36,7 +36,7 @@ const SignupPage = () => {
 			setmessage("All fields are required");
 		}else{
 			axios
-				.post("http://localhost:8081/createadmin", sentData)
+				.post("http://localhost:8081/users/createadmin", sentData)
 				.then(({ data }) => {
 					navigate("/");
 					setdata("");

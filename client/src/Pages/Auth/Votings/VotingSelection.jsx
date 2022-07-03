@@ -13,7 +13,7 @@ const VotingSelection = () => {
 		let mounted = true;
 
 		if (mounted) {
-			axios.get("http://localhost:8081/votetype").then(({ data }) => {
+			axios.get("http://localhost:8081/users/votetype").then(({ data }) => {
 				setcategory(data);
 			});
 		}
