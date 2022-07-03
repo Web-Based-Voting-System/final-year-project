@@ -269,3 +269,7 @@ export const loginAdmin = async (req, res) => {
 		}
 	);
 };
+
+export const createCandidate = async (req, res) => {
+	
+};

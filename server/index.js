@@ -31,6 +31,30 @@ app.use("/admin", AdminRouter);
 //This routes are for users
 app.use("/users", UsersRoutes);
 
+//error handler
+app.use((err, req, res, next) => {
+	if (err instanceof SyntaxError) {
+		res.status(400).son({ success: false, message: "Bad Request" });
+	} else if (err instanceof multer.MulterError) {
+		if (err.code === "LIMIT_FILE_SIZE") {
+			res.status(400).send({
+				message: "File too large",
+			});
+		}
+		if (err.code === "LIMIT_FIELD_COUNT") {
+			res.status(400).send({
+				message: "You can not upload more than one file",
+			});
+		}
+
+		if (err.code === "LIMIT_UNEXPECTED_FILE") {
+			res.status(400).send({
+				message: "File should be an image",
+			});
+		}
+	}
+});
+
 //The application is running on port 8081
 const Port = 8081;
 

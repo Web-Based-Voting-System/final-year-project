@@ -5,15 +5,14 @@ import axios from "axios";
 import CustomButton from "../../Components/Customs/CustomButton";
 import CustomInput from "../../Components/Customs/CustomInput";
 import Modal from "../../Components/Auth/Modal";
-import { Link } from "react-router-dom";
 
 const ElectionCandidates = () => {
 	const [category, setcategory] = useState([]);
 	const [visibilities, setvisibilities] = useState(false);
 
 	const [data, setdata] = useState({
-		election_name: "",
-		election_description: "",
+		candidate_name: "",
+		img: "",
 	});
 	const [message, setmessage] = useState("");
 
@@ -25,13 +24,20 @@ const ElectionCandidates = () => {
 		setmessage("");
 	};
 
+	const handleImageChange = (e) => {
+		setdata({
+			...data,
+			img: e.target.files[0],
+		});
+	};
+
 	const createElection = (e) => {
 		e.preventDefault();
 		if (data.election_name === "" || data.election_description === "") {
 			setmessage("Can not be empty");
 		} else {
 			axios
-				.post("http://localhost:8081/admin/create-vote", data)
+				.post("http://localhost:8081/admin/create-candidtae", data)
 				.then(({ data }) => {
 					setmessage(data);
 				})
@@ -43,9 +49,11 @@ const ElectionCandidates = () => {
 		let mounted = true;
 
 		if (mounted) {
-			axios.get(`http://localhost:8081/admin/electiontype`).then(({ data }) => {
-				setcategory(data);
-			});
+			axios
+				.get(`http://localhost:8081/admin/electiontype`)
+				.then(({ data }) => {
+					setcategory(data);
+				});
 		}
 
 		return () => {};
@@ -79,15 +87,20 @@ const ElectionCandidates = () => {
 							<div className="my-4">
 								<label className="text-lg my-8">Candidate name</label>
 								<CustomInput
-									nameValue={"election_name"}
-									value={data.election_name}
+									nameValue={"candidate_name"}
+									value={data.candidate_name}
 									handleChange={handleChange}
 									type="text"
 								/>
 							</div>
 							<div>
 								<label>Election image</label>
-								<input type={"file"} />
+								<input
+									type={"file"}
+									name={"img"}
+									accept="image/*"
+									onChange={handleImageChange}
+								/>
 							</div>
 							<div className="my-4">
 								<CustomButton
