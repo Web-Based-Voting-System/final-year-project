@@ -8,9 +8,9 @@ const Modal = ({closeCreateVote, children}) => {
 				className="absolute right-10 top-10 text-6xl cursor-pointer"
 				onClick={closeCreateVote}
 			>
-					<FaWindowClose size={40} />
+					<FaWindowClose size={40} color={"White"} />
 			</div>
-			<div className="pt-40">
+			<div className="pt-32">
 				{children}
 			</div>
 		</>

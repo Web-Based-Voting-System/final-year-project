@@ -62,7 +62,7 @@ const ElectionCandidates = () => {
 	return (
 		<div className="w-full bg-[#F7F8FC] h-screen overflow-y-scroll">
 			<div
-				className={`w-screen h-screen bg-[#d1d3dc99] fixed z-40  ${
+				className={`w-screen h-screen bg-[#00000090] fixed z-40  ${
 					visibilities ? "" : "hidden"
 				} `}
 			>
