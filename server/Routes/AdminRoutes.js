@@ -1,4 +1,5 @@
 import express from "express";
+import multer from "multer";
 import {
 	countEelectionVotes,
 	createAnAdmin,
@@ -13,14 +14,12 @@ import {
 	loginUser,
 	voteForCandidate,
 } from "../Controller/ElectionLogics.js";
-const multer = require("multer");
+
 const storage = multer.diskStorage({
-	destination: function (req, file, cb) {
-		cb(null, "/Candidates");
-	},
+	destination: "../candidates images",
 	filename: function (req, file, cb) {
 		const uniqueSuffix = Date.now() + "-" + Math.round(Math.random() * 1e9);
-		cb(null, file.fieldname + "-" + uniqueSuffix);
+		return cb(null, uniqueSuffix + file.originalname);
 	},
 });
 
@@ -38,9 +37,8 @@ const fileFilter = (req, file, cb) => {
 };
 
 const upload = multer({
-	storage: storage,
-	fileFilter: fileFilter,
-	limits: { fileSize: 1000000 },
+	storage,
+	fileFilter,
 });
 
 const router = express.Router();
@@ -51,7 +49,7 @@ router.post("/create-vote", createElection);
 //This routes helps admin to create votes category
 router.post("/create-category", createCategory);
 
-router.post("/create-candidtae", upload.single("img"), createCandidate);
+router.post("/create-candidate", upload.single("img"), createCandidate);
 
 //This routes are for both admin and users
 //This routes gets the type of election

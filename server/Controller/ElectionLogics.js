@@ -271,5 +271,27 @@ export const loginAdmin = async (req, res) => {
 };
 
 export const createCandidate = async (req, res) => {
-	
+	const name = req.body.candidate_name;
+	const img = req.file.filename;
+	const category_id = req.body.category_id;
+
+	db.query(
+		"INSERT INTO candidates(candidate_name,img,category_id) VALUES (?, ?, ?)",
+		[name, img, category_id],
+		(err, result) => {
+			if (err) {
+				console.log(err);
+				return res
+					.status(200)
+					.json({ success: false, message: "Candidate uploading failed" });
+			}
+
+			if (result) {
+				return res.status(200).json({
+					success: true,
+					message: "Candidate uploaded successfully",
+				});
+			}
+		}
+	);
 };

@@ -5,12 +5,15 @@ import axios from "axios";
 import CustomButton from "../../Components/Customs/CustomButton";
 import CustomInput from "../../Components/Customs/CustomInput";
 import Modal from "../../Components/Auth/Modal";
+import { useParams } from "react-router-dom";
 
 const ElectionCandidates = () => {
-	const [category, setcategory] = useState([]);
+	const [candidate, setcandidate] = useState([]);
 	const [visibilities, setvisibilities] = useState(false);
+	const { id } = useParams();
 
 	const [data, setdata] = useState({
+		category_id: id,
 		candidate_name: "",
 		img: "",
 	});
@@ -31,15 +34,19 @@ const ElectionCandidates = () => {
 		});
 	};
 
-	const createElection = (e) => {
+	const createCandidate = (e) => {
 		e.preventDefault();
-		if (data.election_name === "" || data.election_description === "") {
-			setmessage("Can not be empty");
+		if (data.candidate_name === "" || data.img === "") {
+			setmessage("All fields are required");
 		} else {
 			axios
-				.post("http://localhost:8081/admin/create-candidtae", data)
+				.post("http://localhost:8081/admin/create-candidate", data, {
+					headers: {
+						"Content-Type": "multipart/form-data",
+					},
+				})
 				.then(({ data }) => {
-					setmessage(data);
+					setmessage(data.message);
 				})
 				.catch((err) => console.log(err));
 		}
@@ -52,12 +59,12 @@ const ElectionCandidates = () => {
 			axios
 				.get(`http://localhost:8081/admin/electiontype`)
 				.then(({ data }) => {
-					setcategory(data);
+					setcandidate(data);
 				});
 		}
 
 		return () => {};
-	}, [category]);
+	}, []);
 
 	const displayCreateVote = () => {
 		setvisibilities(true);
@@ -76,7 +83,12 @@ const ElectionCandidates = () => {
 			>
 				<Modal closeCreateVote={closeCreateVote}>
 					<div className="pt-20">
-						<form className=" bg-white w-2/6 mx-auto p-8 z-50">
+						<form
+							encType="multipart/form-data"
+							method="POST"
+							onSubmit={createCandidate}
+							className=" bg-white w-2/6 mx-auto p-8 z-50"
+						>
 							<h2 className="text-3xl pb-5">Add a candidate</h2>
 							{message && (
 								<p className="text-lg text-center bg-red-600 p-3 text-white">
@@ -94,7 +106,7 @@ const ElectionCandidates = () => {
 								/>
 							</div>
 							<div>
-								<label>Election image</label>
+								<label>Candidate image</label>
 								<input
 									type={"file"}
 									name={"img"}
@@ -102,10 +114,9 @@ const ElectionCandidates = () => {
 									onChange={handleImageChange}
 								/>
 							</div>
-							<div className="my-4">
+							<div className="mt-10">
 								<CustomButton
 									buttonText={"Create candidate"}
-									handleClick={createElection}
 									backgroundColor={"orange"}
 								/>
 							</div>
